@@ -41,7 +41,7 @@ const family = new Family({
         { firstName: "Mary Kay" }
     ],
     children: [
-        { firstName: "Ryan", gender: "male", grade: 8 },
+        { firstName: "Rajesh", gender: "male", grade: 8 },
         { firstName: "Patrick", gender: "male", grade: 7 }
     ],
     pets: [
