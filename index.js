@@ -5,6 +5,9 @@ var env = require('dotenv').config();
 var passport = require('passport');
 var AzureAdOAuth2Strategy = require('passport-azure-ad-oauth2').Strategy;
 var parser = require('body-parser');
+var jwt = require('jsonwebtoken');
+const User = require('./models/User');
+const findOrCreate = require('mongoose-find-or-create')
 
 mongoose.connect("mongodb://" + process.env.COSMOSDB_HOST + ":" + process.env.COSMOSDB_PORT + "/" + process.env.COSMOSDB_DBNAME + "?ssl=true&replicaSet=globaldb", {
     auth: {
@@ -18,98 +21,56 @@ mongoose.connect("mongodb://" + process.env.COSMOSDB_HOST + ":" + process.env.CO
 
 const app = express();
 
-//code and discard to test the cosmosDB
-// const Family = mongoose.model('Family', new mongoose.Schema({
-//     lastName: String,
-//     parents: [{
-//         familyName: String,
-//         firstName: String,
-//         gender: String
-//     }],
-//     children: [{
-//         familyName: String,
-//         firstName: String,
-//         gender: String,
-//         grade: Number
-//     }],
-//     pets: [{
-//         givenName: String
-//     }],
-//     address: {
-//         country: String,
-//         state: String,
-//         city: String
-//     }
-// }));
+app.use(express.json({ extended: false }));
 
-// const family = new Family({
-//     lastName: "Volum",
-//     parents: [
-//         { firstName: "Thomas" },
-//         { firstName: "Mary Kay" }
-//     ],
-//     children: [
-//         { firstName: "Mike", gender: "male", grade: 8 },
-//         { firstName: "Patrick", gender: "male", grade: 7 }
-//     ],
-//     pets: [
-//         { givenName: "Buddy" }
-//     ],
-//     address: { country: "USA", state: "WA", city: "Seattle" }
-// });
-
-// family.save((err, saveFamily) => {
-//     console.log(JSON.stringify(saveFamily));
-// });
-
+app.use(require("cookie-session")({
+    secret: process.env.JWT_SECRET,
+    resave: false,
+    saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
 passport.use(new AzureAdOAuth2Strategy({
     clientID: process.env.clientID,
     clientSecret: process.env.clientSecret,
     callbackURL: 'http://localhost:5000/api/auth/callback',
-}, (accessToken, refresh_token, params, profile, done) => {
-    console.log(accessToken);
-    console.log('refreshtoken', refresh_token);
-    console.log('Profile', profile);
+}, function (accessToken, refresh_token, params, profile, done) {
+    // var user = jwt.decode(params.id_token, "", true);
+    // User.findOne({ username: user }, function (err, user) {
+    //     if (err) { return done(err); }
+    //     if (!user) { return done(null, false); }
+    //     if (!user.verifyPassword(password)) { return done(null, false); }
+    //     return done(null, user);
+    // });
+
+    var waadProfile = profile || jwt.decode(params.id_token, '', true);
+    console.log(waadProfile);
 }));
+passport.serializeUser(function (user, done) {
+    done(null, user.id);
+});
 
-// app.get('/',
-//     passport.authenticate('azure_ad_oauth2'));
+passport.deserializeUser(function (id, done) {
+    User.findById(id, function (err, user) {
+        done(err, user);
+    });
+});
 
-// passport.use(new OIDCStrategy({
-//     identityMetadata: process.env.identityMetadata,
-//     clientID: process.env.clientID,
-//     responseType: process.env.responseType,
-//     responseMode: process.env.responseMode,
-//     redirectUrl: process.env.redirectUrl,
-//     clientSecret: process.env.clientSecret,
-// },
-//     function (iss, sub, profile, accessToken, refreshToken, done) {
-//         if (!profile.oid) {
-//             return done(new Error("No oid found"), null);
-//         }
-//         // asynchronous verification, for effect...
-//         process.nextTick(function () {
-//             findByOid(profile.oid, function (err, user) {
-//                 if (err) {
-//                     return done(err);
-//                 }
-//                 if (!user) {
-//                     // "Auto-registration"
-//                     users.push(profile);
-//                     return done(null, profile);
-//                 }
-//                 return done(null, user);
-//             });
-//         });
-//     }
-// ));
+
 //Define Routes here
 app.get('/', (req, res) => res.send('Route is working'));
 
 app.use('/api/auth', require('./routes/api/auth'));
 
-app.get('/api/auth/callback',
-    passport.authenticate('azure_ad_oauth2'));
+app.get('/api/auth/callback', passport.authenticate('azure_ad_oauth2',
+    {
+
+        failureRedirect: '/'
+    }),
+    function (req, res) {
+        console.log("failed");
+        res.send("Callback route");
+    });
 
 const PORT = process.env.PORT || 5000;
 
