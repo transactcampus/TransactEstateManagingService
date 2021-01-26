@@ -21,6 +21,7 @@ mongoose.connect("mongodb://" + process.env.COSMOSDB_HOST + ":" + process.env.CO
 
 const app = express();
 
+app.use(parser.urlencoded({ extended: true }));
 app.use(express.json({ extended: false }));
 
 app.use(require("cookie-session")({
@@ -34,17 +35,13 @@ passport.use(new AzureAdOAuth2Strategy({
     clientID: process.env.clientID,
     clientSecret: process.env.clientSecret,
     callbackURL: 'http://localhost:5000/api/auth/callback',
-}, function (accessToken, refresh_token, params, profile, done) {
-    // var user = jwt.decode(params.id_token, "", true);
-    // User.findOne({ username: user }, function (err, user) {
-    //     if (err) { return done(err); }
-    //     if (!user) { return done(null, false); }
-    //     if (!user.verifyPassword(password)) { return done(null, false); }
-    //     return done(null, user);
-    // });
-
-    var waadProfile = profile || jwt.decode(params.id_token, '', true);
+}, (accessToken, refresh_token, params, profile, done) => {
+    var waadProfile = jwt.decode(params.id_token, '', true);
     console.log(waadProfile);
+    User.findOrCreate({ given_name: waadProfile.given_name, family_name: waadProfile.family_name, email: waadProfile.email }, function (err, user) {
+
+        done(err, user);
+    });
 }));
 passport.serializeUser(function (user, done) {
     done(null, user.id);
@@ -56,20 +53,19 @@ passport.deserializeUser(function (id, done) {
     });
 });
 
-
 //Define Routes here
+app.get('/api/dashbord', (req, res) => res.send("Welcome to the dashboard!"));
+
 app.get('/', (req, res) => res.send('Route is working'));
 
 app.use('/api/auth', require('./routes/api/auth'));
 
 app.get('/api/auth/callback', passport.authenticate('azure_ad_oauth2',
     {
-
+        successRedirect: '/api/dashbord',
         failureRedirect: '/'
     }),
     function (req, res) {
-        console.log("failed");
-        res.send("Callback route");
     });
 
 const PORT = process.env.PORT || 5000;
