@@ -9,6 +9,7 @@ var jwt = require('jsonwebtoken');
 const User = require('./models/User');
 const findOrCreate = require('mongoose-find-or-create')
 
+//Connection to the cosmos DB 
 mongoose.connect("mongodb://" + process.env.COSMOSDB_HOST + ":" + process.env.COSMOSDB_PORT + "/" + process.env.COSMOSDB_DBNAME + "?ssl=true&replicaSet=globaldb", {
     auth: {
         user: process.env.COSMOSDB_USER,
@@ -38,7 +39,7 @@ passport.use(new AzureAdOAuth2Strategy({
 }, (accessToken, refresh_token, params, profile, done) => {
     var waadProfile = jwt.decode(params.id_token, '', true);
     //printing the user logged in profile
-    //console.log(waadProfile);
+    console.log(params);
     User.findOrCreate({ given_name: waadProfile.given_name, family_name: waadProfile.family_name, email: waadProfile.email }, function (err, user) {
 
         done(err, user);

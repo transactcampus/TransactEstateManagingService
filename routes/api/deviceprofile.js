@@ -9,6 +9,7 @@ router.get('/', async (req, res) => {
         console.log(deviceprofiles);
         //checking the user id
         console.log(req.user.id);
+
         res.json(deviceprofiles);
     } catch (err) {
         console.log(err.message);
