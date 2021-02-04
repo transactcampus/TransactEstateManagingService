@@ -1,61 +1,23 @@
 //calling the express function from the express library
 var express = require('express');
+var mongoose = require("mongoose");
 var env = require('dotenv').config();
 var passport = require('passport');
 var AzureAdOAuth2Strategy = require('passport-azure-ad-oauth2').Strategy;
 var parser = require('body-parser');
 var jwt = require('jsonwebtoken');
-const CosmosClient = require("@azure/cosmos").CosmosClient;
-const config = require("./config");
-const dbContext = require("./data/databaseContext");
+const User = require('./models/User');
+const findOrCreate = require('mongoose-find-or-create')
 
-// <CreateClientObjectDatabaseContainer>
-const { endpoint, key, databaseId, containerId } = config;
-
-const client = new CosmosClient({ endpoint, key });
-
-const database = client.database(databaseId);
-const container = database.container(containerId);
-
-async function createDB() {
-    // Make sure Tasks database is already setup. If not, create it.
-    await dbContext.create(client, databaseId, containerId);
-    // </CreateClientObjectDatabaseContainer>
-
-    console.log("Connection to CosmosDB is successful.\r\n");
-
-}
-
-createDB();
-
-async function createUser(given_name, family_name, email) {
-    const newUser = {
-        given_name: given_name,
-        family_name: family_name,
-        email: email,
-    };
-
-    try {
-        const querySpec = {
-            query: "SELECT c.email from c"
-        };
-
-        const { resources: users } = await container.items.query(querySpec).fetchAll();
-
-        users.forEach(user => {
-            if (user.email == email) {
-                //console.log(user)
-                return user;
-
-            }
-        });
-        const { resource: createdUser } = await container.items.create(newUser);
-
-        console.log(`\r\nCreated new User: ${createdUser.email} - ${createdUser.given_name}\r\n`);
-    } catch (err) {
-        console.log(err.message);
-    }
-}
+mongoose.connect("mongodb://" + process.env.COSMOSDB_HOST + ":" + process.env.COSMOSDB_PORT + "/" + process.env.COSMOSDB_DBNAME + "?ssl=true&replicaSet=globaldb", {
+    auth: {
+        user: process.env.COSMOSDB_USER,
+        password: process.env.COSMOSDB_PASSWORD
+    },
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    retryWrites: false
+}).then(() => console.log('Connection to CosmosDB successful')).catch((err) => console.error(err));
 
 const app = express();
 
@@ -75,40 +37,42 @@ passport.use(new AzureAdOAuth2Strategy({
     callbackURL: 'http://localhost:5000/api/auth/callback',
 }, (accessToken, refresh_token, params, profile, done) => {
     var waadProfile = jwt.decode(params.id_token, '', true);
-    addUser(waadProfile.email);
-    createUser(waadProfile.given_name, waadProfile.family_name, waadProfile.email);
+    //printing the user logged in profile
+    //console.log(waadProfile);
+    User.findOrCreate({ given_name: waadProfile.given_name, family_name: waadProfile.family_name, email: waadProfile.email }, function (err, user) {
 
-    // User.findOrCreate({ given_name: waadProfile.given_name, family_name: waadProfile.family_name, email: waadProfile.email }, function (err, user) {
-    //const { id, given_name } = createdUser;
-    done(null, true);
-    // });
+        done(err, user);
+    });
 }));
-passport.serializeUser(function (newUser, done) {
-    done(null, newUser.given_name);
+passport.serializeUser(function (user, done) {
+    done(null, user.id);
 });
 
-passport.deserializeUser(function (createdUser, done) {
-    const { id, given_name } = createdUser;
-    //console.log(createdUser)
-    // User.findById(id, function (err, user) {
-    done(null, createdUser);
-    // });
+passport.deserializeUser(function (id, done) {
+    User.findById(id, function (err, user) {
+        done(err, user);
+    });
 });
 
 //Define Routes here
-app.get('/api/dashbord', (req, res) => res.send("Welcome to the dashboard!"));
 
+/* This route takes the user to the dashboard page */
+app.use('/api/dashbord', require('./routes/api/deviceprofile'));
+
+//test route
 app.get('/', (req, res) => res.send('Route is working'));
 
+//Authentication and Authorization Route
 app.use('/api/auth', require('./routes/api/auth'));
 
-app.get('/api/auth/callback', passport.authenticate('azure_ad_oauth2',
-    {
-        successRedirect: '/api/dashbord',
-        failureRedirect: '/'
-    }),
-    function (req, res) {
-    });
+//Code and Discard
+// app.get('/api/auth/callback', passport.authenticate('azure_ad_oauth2',
+//     {
+//         successRedirect: '/api/dashbord',
+//         failureRedirect: '/'
+//     }),
+//     function (req, res) {
+//     });
 
 const PORT = process.env.PORT || 5000;
 
