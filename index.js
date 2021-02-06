@@ -25,6 +25,7 @@ const app = express();
 app.use(parser.urlencoded({ extended: true }));
 app.use(express.json({ extended: false }));
 
+
 app.use(require("cookie-session")({
     secret: process.env.JWT_SECRET,
     resave: false,
@@ -57,14 +58,17 @@ passport.deserializeUser(function (id, done) {
 
 //Define Routes here
 
-/* This route takes the user to the dashboard page */
-app.use('/api/dashbord', require('./routes/api/deviceprofile'));
-
 //test route
 app.get('/', (req, res) => res.send('Route is working'));
 
 //Authentication and Authorization Route
 app.use('/api/auth', require('./routes/api/auth'));
+
+/* This route takes the user to the dashboard page */
+app.use('/api/dashbord', require('./routes/api/deviceprofile'));
+
+//history routes
+app.use('/api/history', require('./routes/api/historyprofile'));
 
 //Code and Discard
 // app.get('/api/auth/callback', passport.authenticate('azure_ad_oauth2',
