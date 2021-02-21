@@ -69,7 +69,7 @@ router.get('/deviceprofiles/:status', paginatedInfo, async (req, res) => {
         //code&discard
         console.log(req.limit);
 
-        const deviceprofiles = await DeviceInfo.find({ status: req.params.status }).limit(req.limit).skip(req.startIndex);
+        const deviceprofiles = await DeviceInfo.find({ status: req.params.status }).select('-_id').limit(req.limit).skip(req.startIndex);
 
         if (!deviceprofiles) {
             return res.status(400).json({ msg: 'Device Profile with that status not found' });
@@ -87,7 +87,7 @@ router.get('/deviceprofiles/:status', paginatedInfo, async (req, res) => {
 //@access private
 router.get('/deviceprofiles/devices/:device_id', async (req, res) => {
     try {
-        const deviceprofile = await DeviceInfo.findOne({ device_id: req.params.device_id });
+        const deviceprofile = await DeviceInfo.findOne({ device_id: req.params.device_id }).select('-_id');
 
         if (!deviceprofile) {
             return res.status(404).json({ msg: 'Device id not found.' });
@@ -106,7 +106,7 @@ router.get('/deviceprofiles/devices/:device_id', async (req, res) => {
 //@access private
 router.get('/deviceprofiles/institutions/:institution_id', paginatedInfo, async (req, res) => {
     try {
-        const deviceprofiles = await DeviceInfo.find({ institution_id: req.params.institution_id }).limit(req.limit).skip(req.startIndex);
+        const deviceprofiles = await DeviceInfo.find({ institution_id: req.params.institution_id }).select('_id').limit(req.limit).skip(req.startIndex);
 
         if (!deviceprofiles) {
             return res.status(400).json({ msg: 'Institution id not found.' });

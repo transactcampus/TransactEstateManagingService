@@ -17,7 +17,7 @@ router.get('/', paginatedData(HistoryStore), async (req, res) => {
 //@access private
 router.get('/:device_id', paginatedInfo, async (req, res) => {
     try {
-        const devicehistory = await HistoryStore.find({ device_id: req.params.device_id }).limit(req.limit).skip(req.startIndex);
+        const devicehistory = await HistoryStore.find({ device_id: req.params.device_id }).select('-_id').limit(req.limit).skip(req.startIndex);
 
         if (!devicehistory) {
             return res.status(400).json({ msg: 'History of the device could not be found.' });

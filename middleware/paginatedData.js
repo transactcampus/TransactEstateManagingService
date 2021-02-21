@@ -26,7 +26,7 @@ module.exports = function paginatedData(model) {
 
         try {
 
-            results.result = await model.find().limit(limit).skip(startIndex).exec()
+            results.result = await model.find().select('-_id').limit(limit).skip(startIndex).exec()
 
             res.paginatedResult = results;
 
