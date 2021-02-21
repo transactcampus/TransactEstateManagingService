@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const DeviceInfo = require('../../models/DeviceInfo');
+const paginatedData = require('../../middleware/paginatedData');
+const paginatedInfo = require('../../middleware/paginatedInfo');
 
 //@route GET api/dashboard
 //@desc Get the dashboard of the IoT devices
@@ -9,24 +11,14 @@ router.get('/', (req, res) => {
     res.send("Welcome to the Dashboard!!")
 });
 
-//@route GET api/dashboard/deviceprofiles
+//@route GET api/dashboard/deviceprofiles?page=1&limit=5
 //@desc Get all the recent status of the devices
 //@access private
-//GET api/dashboard/deviceprofiles?limit=10&skip=10
-router.get('/deviceprofiles', async (req, res) => {
-    try {
-        const deviceprofiles = await DeviceInfo.find();
-        //code and discard
-        //printing the device profiles
-        //console.log(deviceprofiles);
-        //checking the user id
-        //console.log(req.user.id);
-
-        res.json(deviceprofiles);
-    } catch (err) {
-        console.log(err.message);
-        res.status(500).send('Server Error');
-    }
+router.get('/deviceprofiles', paginatedData(DeviceInfo), async (req, res) => {
+    res.json(res.paginatedResult);
+    //code&discard
+    //helpful for frontend team to understand the data
+    console.log(res.paginatedResult.result[0].device_id);
 });
 
 //@route GET api/dashboard/deviceprofiles/onlinecount
@@ -62,11 +54,22 @@ router.get('/deviceprofiles/offlinecount', async (req, res) => {
 });
 
 //@route GET api/dashboard/deviceprofiles/:status
+//@route GET api/dashboard/deviceprofiles/:status?page=1&limit=10
 //@desc Get devices by their recent status
 //@access private
-router.get('/deviceprofiles/:status', async (req, res) => {
+router.get('/deviceprofiles/:status', paginatedInfo, async (req, res) => {
     try {
-        const deviceprofiles = await DeviceInfo.find({ status: req.params.status });
+        // const page = parseInt(req.query.page);
+
+        // const limit = parseInt(req.query.limit);
+
+        // const startIndex = (page - 1) * limit;
+
+        // const endIndex = page * limit;
+        //code&discard
+        console.log(req.limit);
+
+        const deviceprofiles = await DeviceInfo.find({ status: req.params.status }).limit(req.limit).skip(req.startIndex);
 
         if (!deviceprofiles) {
             return res.status(400).json({ msg: 'Device Profile with that status not found' });
@@ -98,11 +101,12 @@ router.get('/deviceprofiles/devices/:device_id', async (req, res) => {
 });
 
 //@route GET api/dashboard/deviceprofiles/:institution_id
+//@route GET api/dashboard/deviceprofiles/:institution_id?page=1&limit=2
 //@desc Get device profile by institution id
 //@access private
-router.get('/deviceprofiles/institutions/:institution_id', async (req, res) => {
+router.get('/deviceprofiles/institutions/:institution_id', paginatedInfo, async (req, res) => {
     try {
-        const deviceprofiles = await DeviceInfo.find({ institution_id: req.params.institution_id });
+        const deviceprofiles = await DeviceInfo.find({ institution_id: req.params.institution_id }).limit(req.limit).skip(req.startIndex);
 
         if (!deviceprofiles) {
             return res.status(400).json({ msg: 'Institution id not found.' });
