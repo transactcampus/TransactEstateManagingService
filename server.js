@@ -59,7 +59,7 @@ passport.deserializeUser(function (id, done) {
 //Define Routes here
 
 //test route
-app.get('/', (req, res) => res.send('Route is working'));
+//app.get('/', (req, res) => res.send('Route is working'));
 
 //Authentication and Authorization Route
 app.use('/api/auth', require('./routes/api/auth'));
@@ -79,6 +79,6 @@ app.use('/api/history', require('./routes/api/historyprofile'));
 //     function (req, res) {
 //     });
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT;
 
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`));

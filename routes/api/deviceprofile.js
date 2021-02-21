@@ -12,16 +12,49 @@ router.get('/', (req, res) => {
 //@route GET api/dashboard/deviceprofiles
 //@desc Get all the recent status of the devices
 //@access private
+//GET api/dashboard/deviceprofiles?limit=10&skip=10
 router.get('/deviceprofiles', async (req, res) => {
     try {
         const deviceprofiles = await DeviceInfo.find();
         //code and discard
         //printing the device profiles
-        console.log(deviceprofiles);
+        //console.log(deviceprofiles);
         //checking the user id
-        console.log(req.user.id);
+        //console.log(req.user.id);
 
         res.json(deviceprofiles);
+    } catch (err) {
+        console.log(err.message);
+        res.status(500).send('Server Error');
+    }
+});
+
+//@route GET api/dashboard/deviceprofiles/onlinecount
+//@desc Get the total number of online devices
+//@access private
+router.get('/deviceprofiles/onlinecount', async (req, res) => {
+    try {
+        // await DeviceInfo.countDocuments({ status: 'online' }, function (err, c) {
+        //     res.json({ onlineDevices: "c" });
+        // });
+        const count = await DeviceInfo.countDocuments({ status: 'online' });
+        res.json(count);
+    } catch (err) {
+        console.log(err.message);
+        res.status(500).send('Server Error');
+    }
+});
+
+//@route GET api/dashboard/deviceprofiles/offlinecount
+//@desc Get the total number of offline devices
+//@access private
+router.get('/deviceprofiles/offlinecount', async (req, res) => {
+    try {
+        // await DeviceInfo.countDocuments({ status: 'online' }, function (err, c) {
+        //     res.json({ onlineDevices: "c" });
+        // });
+        const count = await DeviceInfo.countDocuments({ status: 'offline' });
+        res.json(count);
     } catch (err) {
         console.log(err.message);
         res.status(500).send('Server Error');
@@ -54,7 +87,7 @@ router.get('/deviceprofiles/devices/:device_id', async (req, res) => {
         const deviceprofile = await DeviceInfo.findOne({ device_id: req.params.device_id });
 
         if (!deviceprofile) {
-            return res.status(400).json({ msg: 'Device id not found.' });
+            return res.status(404).json({ msg: 'Device id not found.' });
         }
 
         res.json(deviceprofile);
