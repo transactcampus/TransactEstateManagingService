@@ -30,6 +30,7 @@ router.get('/deviceprofiles/onlinecount', async (req, res) => {
         //     res.json({ onlineDevices: "c" });
         // });
         const count = await DeviceInfo.countDocuments({ status: 'online' });
+        console.log(count);
         res.json(count);
     } catch (err) {
         console.log(err.message);
