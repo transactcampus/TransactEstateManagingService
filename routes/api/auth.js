@@ -6,10 +6,15 @@ router.get('/', passport.authenticate('azure_ad_oauth2'));
 
 router.get('/callback', passport.authenticate('azure_ad_oauth2',
     {
-        successRedirect: '/api/dashbord',
+        successRedirect: '/dashboard',
         failureRedirect: '/'
     }),
     function (req, res) {
     });
+
+router.get('/logout', (req, res) => {
+    req.logOut();
+    res.redirect("/");
+});
 
 module.exports = router;

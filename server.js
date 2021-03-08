@@ -36,7 +36,7 @@ app.use(passport.session());
 passport.use(new AzureAdOAuth2Strategy({
     clientID: process.env.clientID,
     clientSecret: process.env.clientSecret,
-    callbackURL: 'http://localhost:5000/api/auth/callback',
+    callbackURL: 'http://localhost:3000/api/auth/callback',
 }, (accessToken, refresh_token, params, profile, done) => {
     var waadProfile = jwt.decode(params.id_token, '', true);
     //printing the user logged in profile
@@ -57,27 +57,15 @@ passport.deserializeUser(function (id, done) {
 });
 
 //Define Routes here
-
-//test route
-//app.get('/', (req, res) => res.send('Route is working'));
-
-//Authentication and Authorization Route
 app.use('/api/auth', require('./routes/api/auth'));
 
-/* This route takes the user to the dashboard page */
-app.use('/api/dashbord', require('./routes/api/deviceprofile'));
+app.use('/api/deviceprofile', require('./routes/api/deviceprofile'));
 
-//history routes
 app.use('/api/history', require('./routes/api/historyprofile'));
 
-//Code and Discard
-// app.get('/api/auth/callback', passport.authenticate('azure_ad_oauth2',
-//     {
-//         successRedirect: '/api/dashbord',
-//         failureRedirect: '/'
-//     }),
-//     function (req, res) {
-//     });
+app.get('/api/current_user', (req, res) => {
+    res.send(req.user);
+});
 
 const PORT = process.env.PORT;
 
