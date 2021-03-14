@@ -4,14 +4,7 @@ const DeviceInfo = require('../../models/DeviceInfo');
 const paginatedData = require('../../middleware/paginatedData');
 const paginatedInfo = require('../../middleware/paginatedInfo');
 
-//@route GET api/dashboard
-//@desc Get the dashboard of the IoT devices
-//@access private
-// router.get('/', (req, res) => {
-//     res.send("Welcome to the Dashboard!!")
-// });
-
-//@route GET api/dashboard/deviceprofiles?page=1&limit=5
+//@route GET api/deviceprofile/?page=1&limit=5
 //@desc Get all the recent status of the devices
 //@access private
 router.get('/', paginatedInfo, async (req, res) => {
@@ -32,7 +25,7 @@ router.get('/', paginatedInfo, async (req, res) => {
     //console.log(res.paginatedResult.result[0].device_id);
 });
 
-//@route GET api/dashboard/deviceprofiles/onlinecount
+//@route GET api/deviceprofile/onlinecount
 //@desc Get the total number of online devices
 //@access private
 router.get('/onlinecount', async (req, res) => {
@@ -48,7 +41,7 @@ router.get('/onlinecount', async (req, res) => {
     }
 });
 
-//@route GET api/dashboard/deviceprofiles/offlinecount
+//@route GET api/deviceprofile/offlinecount
 //@desc Get the total number of offline devices
 //@access private
 router.get('/offlinecount', async (req, res) => {
@@ -64,8 +57,8 @@ router.get('/offlinecount', async (req, res) => {
     }
 });
 
-//@route GET api/dashboard/deviceprofiles/:status
-//@route GET api/dashboard/deviceprofiles/:status?page=1&limit=10
+//@route GET api/deviceprofile/:status
+//@route GET api/deviceprofile/:status?page=1&limit=10
 //@desc Get devices by their recent status
 //@access private
 router.get('/:status', paginatedInfo, async (req, res) => {
@@ -93,7 +86,7 @@ router.get('/:status', paginatedInfo, async (req, res) => {
     }
 });
 
-//@route GET api/dashboard/deviceprofiles/devices/:device_id
+//@route GET api/deviceprofile/devices/:device_id
 //@desc Get device profile by device ID
 //@access private
 router.get('/devices/:device_id', async (req, res) => {
@@ -111,8 +104,8 @@ router.get('/devices/:device_id', async (req, res) => {
     }
 });
 
-//@route GET api/dashboard/deviceprofiles/:institution_id
-//@route GET api/dashboard/deviceprofiles/:institution_id?page=1&limit=2
+//@route GET api/deviceprofile/institutions/:institution_id
+//@route GET api/deviceprofile/institutions/:institution_id?page=1&limit=2
 //@desc Get device profile by institution id
 //@access private
 router.get('/institutions/:institution_id', paginatedInfo, async (req, res) => {
