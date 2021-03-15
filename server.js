@@ -59,13 +59,15 @@ passport.deserializeUser(function (id, done) {
 //Define Routes here
 app.use('/api/auth', require('./routes/api/auth'));
 
+app.get('/api/current_user', (req, res) => {
+    res.send(req.user);
+});
+
 app.use('/api/deviceprofile', require('./routes/api/deviceprofile'));
 
 app.use('/api/history', require('./routes/api/historyprofile'));
 
-app.get('/api/current_user', (req, res) => {
-    res.send(req.user);
-});
+
 
 const PORT = process.env.PORT;
 

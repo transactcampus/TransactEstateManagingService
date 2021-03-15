@@ -14,7 +14,9 @@ const DeviceInfoSchema = new mongoose.Schema({
     applicationVersion: { type: String },
     statusDateTime: { type: String },
     status: { type: String },
-    errorText: { type: String }
+    errorText: { type: String },
+    lat: { type: String },
+    lng: { type: String }
 });
 
 module.exports = DeviceInfo = mongoose.model('DeviceInfo', DeviceInfoSchema);

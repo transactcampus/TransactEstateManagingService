@@ -14,7 +14,9 @@ const HistoryStoreSchema = new mongoose.Schema({
     applicationVersion: { type: String },
     statusDateTime: { type: String },
     status: { type: String },
-    errorText: { type: String }
+    errorText: { type: String },
+    lat: { type: String },
+    lng: { type: String }
 });
 
 module.exports = HistoryStore = mongoose.model('HistoryStore', HistoryStoreSchema);
