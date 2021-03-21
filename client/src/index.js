@@ -10,6 +10,14 @@ import { createStore, applyMiddleware } from 'redux';
 import reducers from './reducers';
 import reduxThunk from 'redux-thunk';
 
+import 'bootstrap/dist/css/bootstrap.css';
+
+import $ from 'jquery';
+import Popper from 'popper.js';
+import 'bootstrap/dist/js/bootstrap.bundle.min';
+
+import "react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css";
+import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
 
 
 const store = createStore(reducers, {}, applyMiddleware(reduxThunk));

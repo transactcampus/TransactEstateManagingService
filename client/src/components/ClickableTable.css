@@ -1,0 +1,37 @@
+/* Inactive tab */
+.summaryTab {
+    background-color:rgba(213, 0, 50, 0.1);
+    border-color: black;
+    
+}
+.summaryTab a:hover {
+    background-color:#D50032;
+    color: white;
+}
+
+nav a {
+    color:grey;
+    font-size: 110%;
+    background-color:rgba(213, 0, 50, 0.1);
+}
+.nav-tabs .nav-link.active{
+    color: white;
+    background-color:#D50032;
+    border-color: #dee2e6 #dee2e6 #fff;
+}
+/* Active tab */
+.summaryTab Tab.active
+/* .summaryTab ul > li.active > a:hover,
+.summaryTab ul > li.active > a:focus  */
+{
+    /* .summaryTab li.active a{
+/* .summaryTab li.active a:hover,
+.summaryTab li.active a:focus { */
+    background-color: #D50032; 
+    color: white;
+}
+.custom-modal {
+    background-color:rgba(0, 0, 0, 0.1);
+    max-height: fit-content;
+    
+}

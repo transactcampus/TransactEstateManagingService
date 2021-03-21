@@ -1,21 +1,22 @@
-import React, {Component} from 'react';
-import {connect} from 'react-redux';
-import {fetchDevice} from '../actions';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { fetchDevice } from '../actions';
 import TableInfo from './TableInfo';
+import ClickableTable from './ClickableTable';
 
 class DeviceInfo extends Component {
-     componentDidMount(){
-         this.props.fetchDevice();
-     }
+    componentDidMount() {
+        this.props.fetchDevice();
+    }
 
-     render(){
-         console.log(this.props)
-         return (
-             <div>
-                <TableInfo {...this.props}/>
-             </div>
-         );
-     }
+    render() {
+        console.log(this.props)
+        return (
+            <div>
+                <ClickableTable {...this.props} />
+            </div>
+        );
+    }
     // renderDeviceInfo(){
     //     return this.props.deviceInfo.map(deviceinfo => {
     //         return(
@@ -25,7 +26,7 @@ class DeviceInfo extends Component {
     //                 <td>{deviceinfo.category}</td>
     //                 <td>{deviceinfo.type}</td>
     //             </tr>
-                
+
     //         );
     //     })
     // }
@@ -45,13 +46,13 @@ class DeviceInfo extends Component {
     //                 {this.renderDeviceInfo()}
     //             </tbody>
     //         </table>
-               
+
     //         </div>
     //     );
     // }
 }
 
-function mapStateToProps(state){
-    return { deviceInfo: state.deviceInfo}
+function mapStateToProps(state) {
+    return { deviceInfo: state.deviceInfo }
 }
-export default connect(mapStateToProps, {fetchDevice})(DeviceInfo);
+export default connect(mapStateToProps, { fetchDevice })(DeviceInfo);
