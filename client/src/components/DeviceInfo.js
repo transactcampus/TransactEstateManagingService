@@ -10,7 +10,7 @@ class DeviceInfo extends Component {
     }
 
     render() {
-        console.log(this.props)
+
         return (
             <div>
                 <ClickableTable {...this.props} />
@@ -53,6 +53,6 @@ class DeviceInfo extends Component {
 }
 
 function mapStateToProps(state) {
-    return { deviceInfo: state.deviceInfo }
+    return { deviceInfo: state.deviceInfo.devicesInfos }
 }
 export default connect(mapStateToProps, { fetchDevice })(DeviceInfo);

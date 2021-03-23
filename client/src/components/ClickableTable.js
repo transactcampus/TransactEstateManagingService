@@ -24,7 +24,6 @@ function ClickableTable(props) {
 
 
   useEffect(() => {
-    // logic for bringing in data object
     setDeviceinfo(props.deviceInfo)
   })
 

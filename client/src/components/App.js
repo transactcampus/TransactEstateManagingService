@@ -18,17 +18,17 @@ class App extends Component {
   }
   render() {
     return (
-      // <Provider store={store}>
-      <div className="container-fluid">
-        <BrowserRouter>
-          <div>
-            <Route exact path="/" component={Header} />
-            <Route exact path="/" component={Login} />
-            <Route path="/dashboard" component={Dashboard} />
-          </div>
-        </BrowserRouter>
-      </div>
-      // </Provider>
+      <Provider store={store}>
+        <div className="container-fluid">
+          <BrowserRouter>
+            <div>
+              <Route exact path="/" component={Header} />
+              <Route exact path="/" component={Login} />
+              <Route path="/dashboard" component={Dashboard} />
+            </div>
+          </BrowserRouter>
+        </div>
+      </Provider>
 
     );
   }

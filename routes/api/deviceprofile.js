@@ -57,6 +57,28 @@ router.get('/offlinecount', async (req, res) => {
     }
 });
 
+router.get('/analyticdata', async (req, res) => {
+    try {
+        const campusAccessDevicesCount = await DeviceInfo.countDocuments({ category: 'campus access devices' });
+        const pointOfSaleCount = await DeviceInfo.countDocuments({ category: 'pointofSale' });
+        const doorAccessCount = await DeviceInfo.countDocuments({ category: 'doorAccess' });
+        const VideoSurvillanceCount = await DeviceInfo.countDocuments({ category: 'Video Survelliance' });
+        const SmartTerminalsCount = await DeviceInfo.countDocuments({ category: 'Smart Terminals' });
+        const analyticdata = {
+            campusAccessDevices: campusAccessDevicesCount,
+            pointofSale: pointOfSaleCount,
+            doorAccess: doorAccessCount,
+            VideoSurvillance: VideoSurvillanceCount,
+            SmartTerminals: SmartTerminalsCount,
+        }
+
+        res.json(analyticdata);
+    } catch (err) {
+        console.log(err.message);
+        res.status(500).send('Server Error');
+    }
+});
+
 //@route GET api/deviceprofile/:status
 //@route GET api/deviceprofile/:status?page=1&limit=10
 //@desc Get devices by their recent status
