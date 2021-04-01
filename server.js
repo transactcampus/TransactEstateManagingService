@@ -8,6 +8,7 @@ var parser = require('body-parser');
 var jwt = require('jsonwebtoken');
 const User = require('./models/User');
 const findOrCreate = require('mongoose-find-or-create')
+const path = require("path");
 
 //Connection to the cosmos DB 
 mongoose.connect("mongodb://" + process.env.COSMOSDB_HOST + ":" + process.env.COSMOSDB_PORT + "/" + process.env.COSMOSDB_DBNAME + "?ssl=true&replicaSet=globaldb", {
@@ -63,8 +64,17 @@ app.use('/api/deviceprofile', require('./routes/api/deviceprofile'));
 
 app.use('/api/history', require('./routes/api/historyprofile'));
 
+// Serve static assets in production
+if (process.env.NODE_ENV === 'production') {
+    // Set static folder
+    app.use(express.static('client/build'));
+
+    app.get('*', (req, res) => {
+        res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+    });
 
 
-const PORT = process.env.PORT;
 
-app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
+    const PORT = process.env.PORT;
+
+    app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
