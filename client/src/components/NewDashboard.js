@@ -23,7 +23,7 @@ import { connect } from 'react-redux';
 import Aboutus from './Aboutus';
 import Homepage from './Homepage';
 import TableInfo from './TableInfo';
-
+import Maps from './Maps';
 import Box from '@material-ui/core/Box';
 
 function Dashboard(props) {
@@ -44,7 +44,7 @@ function Dashboard(props) {
       case 'home':
         return <Homepage />
       case 'aboutus':
-        return <TableInfo {...props} />
+        return <Maps />
       default:
         break;
     }
@@ -108,7 +108,7 @@ function Dashboard(props) {
               <ListItemIcon className={classes.icon}>
                 <InfoIcon />
               </ListItemIcon>
-              <ListItemText primary="About Us" />
+              <ListItemText primary="Device Locations" />
             </ListItem>
             <ListItem button>
               <ListItemIcon className={classes.icon}>
