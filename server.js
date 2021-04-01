@@ -29,6 +29,7 @@ app.use(express.json({ extended: false }));
 
 app.use(require("cookie-session")({
     secret: process.env.JWT_SECRET,
+    keys: ['key1', 'key2'],
     resave: false,
     saveUninitialized: false
 }));
@@ -76,6 +77,6 @@ if (process.env.NODE_ENV === 'production') {
 
 
 
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
