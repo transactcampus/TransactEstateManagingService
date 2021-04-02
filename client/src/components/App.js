@@ -18,7 +18,7 @@ class App extends Component {
   }
   render() {
     return (
-      // <Provider store={store}>
+      //<Provider store={store}>
       <div className="container-fluid">
         <BrowserRouter>
           <div>
@@ -28,7 +28,7 @@ class App extends Component {
           </div>
         </BrowserRouter>
       </div>
-      // </Provider>
+      //</Provider>
 
     );
   }

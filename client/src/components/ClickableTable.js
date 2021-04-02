@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import { Modal, Button, Tab } from 'react-bootstrap';
 import BootstrapTable from 'react-bootstrap-table-next';
 import Tabs from 'react-bootstrap/Tabs';
 import paginationFactory from "react-bootstrap-table2-paginator";
 import './ClickableTable.css';
-import { fetchDevice } from '../actions';
 import ListGroup from 'react-bootstrap/ListGroup'
 
 import Summary from './Summary';
@@ -14,6 +12,7 @@ import Summary from './Summary';
 function ClickableTable(props) {
 
   const [deviceinfo, setDeviceinfo] = useState([]);
+  const [q, setQ] = useState("");
 
   const [modalInfo, setModalInfo] = useState([]);
   const [showModal, setShowModal] = useState([false]);
@@ -47,6 +46,11 @@ function ClickableTable(props) {
       dataField: 'type',
       text: 'Type',
       headerStyle: { textAlign: 'center' }
+    },
+    {
+      dataField: 'status',
+      text: 'Status',
+      headerStyle: { textAlign: 'center' }
     }
   ];
 
@@ -71,7 +75,19 @@ function ClickableTable(props) {
     }
   ));
 
+  function search(rows) {
 
+    return rows.filter(
+      (row) =>
+        row.device_id.toLowerCase().indexOf(q.toLowerCase()) > -1 ||
+        row.university_id.toLowerCase().indexOf(q.toLowerCase()) > -1 ||
+        row.category.toLowerCase().indexOf(q.toLowerCase()) > -1 ||
+        row.type.toLowerCase().indexOf(q.toLowerCase()) > -1 ||
+        row.status.toLowerCase().indexOf(q.toLowerCase()) > -1
+
+    );
+
+  }
 
 
   const rowEvents = {
@@ -134,12 +150,15 @@ function ClickableTable(props) {
 
 
   return (
-    console.log(props),
+
     <div className="App">
+      <div>
+        <input size="sm" className="mb-3" type="text" placeholder="Enter your search query..." value={q} onChange={(e) => setQ(e.target.value)} />
+      </div>
       <BootstrapTable
         striped bordered hover size="sm" ali
         keyField="id"
-        data={datas}
+        data={search(datas)}
         columns={columns}
         rowEvents={rowEvents}
         pagination={paginationFactory()}
