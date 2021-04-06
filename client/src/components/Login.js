@@ -12,8 +12,11 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core';
 import PropTypes from 'prop-types';
-
-
+import { connect } from 'react-redux';
+import {
+  BrowserRouter as Router,
+  Redirect
+} from "react-router-dom";
 
 const useStyles = theme => ({
   root: {
@@ -55,6 +58,9 @@ const useStyles = theme => ({
 class Login extends Component {
 
   render() {
+    if (this.props.auth.user) {
+      return <Redirect to="/dashboard" />
+    }
     const { classes } = this.props;
     return (
       <Grid container component="main" className={classes.root}>
@@ -130,4 +136,8 @@ Login.prototypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(useStyles)(Login);
+function mapStateToProps(state) {
+  return { auth: state.auth };
+}
+
+export default connect(mapStateToProps)(withStyles(useStyles)(Login));

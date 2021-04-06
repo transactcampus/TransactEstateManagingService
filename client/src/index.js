@@ -1,21 +1,15 @@
-import 'materialize-css/dist/css/materialize.min.css';
-import 'react-bootstrap/dist/react-bootstrap.min.js';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/App';
 import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
-
 import reducers from './reducers';
 import reduxThunk from 'redux-thunk';
-
-import 'bootstrap/dist/css/bootstrap.css';
-
-import $ from 'jquery';
-import Popper from 'popper.js';
+import 'materialize-css/dist/css/materialize.min.css';
+import 'react-bootstrap/dist/react-bootstrap.min.js';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
-
 import "react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css";
 import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
 

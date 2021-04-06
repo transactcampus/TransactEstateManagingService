@@ -56,7 +56,7 @@ function Dashboard(props) {
       case null:
         return <a href="/api/auth">Login with Azure</a>;
       default:
-        return <a href="/#"><span className="white-text text-darken-2">Admin: {props.auth.given_name} </span></a>
+        return <a href="/dashboard"><span className="white-text text-darken-2">Admin: {props.auth.given_name} </span></a>
     }
   }
 
@@ -64,7 +64,7 @@ function Dashboard(props) {
   return (
     <div className={classes.root}>
       <CssBaseline />
-      <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
+      {/* <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
         <Toolbar className={classes.toolbar}>
           <IconButton
             edge="start"
@@ -82,8 +82,8 @@ function Dashboard(props) {
           <Box paddingLeft={5}><a href="/api/auth/logout"><span className="white-text text-darken-2">Logout</span></a></Box>
         </Toolbar>
 
-      </AppBar>
-      <Drawer
+      </AppBar> */}
+      {/* <Drawer
         variant="permanent"
         classes={{
           paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
@@ -118,7 +118,7 @@ function Dashboard(props) {
             </ListItem>
           </div>
         </List>
-      </Drawer>
+      </Drawer> */}
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         {loadTabs()}

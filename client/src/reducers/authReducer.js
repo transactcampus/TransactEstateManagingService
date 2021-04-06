@@ -1,12 +1,29 @@
-import { FETCH_USER } from '../actions/types';
+import { FETCH_USER, LOGOUT } from '../actions/types';
 
+const initialState = {
+    isAuthenticated: null,
+    loading: true,
+    user: null
+};
 
-export default function (state = null, action) {
-    console.log(action);
-    switch (action.type) {
+export default function (state = initialState, action) {
+    const { type, payload } = action;
+
+    switch (type) {
         //if the action is fetch_user send the payload
         case FETCH_USER:
-            return action.payload || false;
+            return {
+                ...state,
+                // isAuthenticated: true,
+                loading: false,
+                user: payload,
+            };
+        case LOGOUT:
+            return {
+                ...state,
+                isAuthenticated: false,
+                loading: false
+            }
         default:
             return state;
     }

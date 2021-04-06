@@ -1,5 +1,5 @@
 import axios from 'axios'; //used to make ajax request
-import { FETCH_USER, FETCH_DEVICE, FETCH_CATEGORY, FETCH_ONLINECOUNT, FETCH_OFFLINECOUNT } from './types';
+import { FETCH_USER, FETCH_DEVICE, FETCH_CATEGORY, FETCH_ONLINECOUNT, FETCH_OFFLINECOUNT, LOGOUT } from './types';
 
 //fetchUser is a action creater
 export const fetchUser = () => async dispatch => {
@@ -33,4 +33,8 @@ export const fetchCategory = () => async dispatch => {
     const res = await axios.get('/api/deviceprofile/analyticdata');
     console.log(res);
     dispatch({ type: FETCH_CATEGORY, payload: res.data });
+}
+
+export const logout = () => (dispatch) => {
+    dispatch({ type: LOGOUT });
 }

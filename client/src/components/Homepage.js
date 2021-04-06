@@ -37,21 +37,21 @@ const Homepage = () => {
     <Fragment>
       <Container maxWidth="lg" className={classes.container}>
         <Grid container spacing={6} >
-          <Grid item xs={2} >
+          <Grid item item xs={6} md={5} lg={4} >
             <Box my={4} r={5}>
               <Paper className={c.box} elevation={10}>
                 <TotalCount />
               </Paper>
             </Box>
           </Grid>
-          <Grid item xs={2} >
+          <Grid item item xs={6} md={5} lg={4} >
             <Box my={4}>
               <Paper className={c.box} elevation={10}>
                 <OnlineCount />
               </Paper>
             </Box>
           </Grid>
-          <Grid item xs={2} >
+          <Grid item item xs={6} md={5} lg={4} >
             <Box my={4}>
               <Paper className={c.box} elevation={10}>
                 <OfflineCount />
@@ -59,11 +59,22 @@ const Homepage = () => {
             </Box>
           </Grid>
         </Grid>
+
+
       </Container>
 
       <Container maxWidth="lg" className={classes.container}>
-        <Analytic />
+
+
+        <Grid item xs={12} >
+          <Analytic />
+        </Grid>
+
+
+
+
       </Container>
+
 
       <Container maxWidth="lg" className={classes.container}>
         <Grid container spacing={3}>
