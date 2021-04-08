@@ -104,8 +104,8 @@ function ClickableTable(props) {
   const ModalContent = () => {
     return (
       <Modal {...props}
-        className="custom-modal"
-        size="md"
+        className="custom-modal "
+        size="lg"
         aria-labelledby="contained-modal-title-vcenter"
         centered
         show={show} onHide={handleClose} backdrop="static"

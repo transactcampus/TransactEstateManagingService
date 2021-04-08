@@ -32,6 +32,12 @@ nav a {
 }
 .custom-modal {
     background-color:rgba(0, 0, 0, 0.1);
-    max-height: fit-content;
+    
+    position:  fixed;
+   width: 600px;
+   top: 40px;
+   left: calc(50% - 300px);
+   bottom: 40px;
+   z-index: 100;
     
 }

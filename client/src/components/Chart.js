@@ -68,6 +68,8 @@ function Chart(props) {
                                 display: true,
                                 position: 'right'
                             },
+                            responsive: true,
+                            maintainAspectRatio: false,
                             scales: {
                                 yAxes: [
                                     {
