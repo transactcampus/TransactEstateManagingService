@@ -69,46 +69,6 @@ function Chart(props) {
                                 position: 'right'
                             },
                             responsive: true,
-                            maintainAspectRatio: false,
-                            scales: {
-                                yAxes: [
-                                    {
-                                        ticks: {
-                                            autoSkip: true,
-                                            maxTicksLimit: 10,
-                                            beginAtZero: true
-                                        },
-                                        gridLines: {
-                                            display: false
-                                        }
-                                    }
-                                ],
-                                xAxes: [
-                                    {
-                                        gridLines: {
-                                            display: false
-                                        }
-                                    }
-                                ]
-                            }
-                        }}
-                    />
-                </Grid>
-
-                <Grid item xs={12} md={8} lg={6}>
-                    <Line
-                        data={chartData}
-
-                        options={{
-                            title: {
-                                display: true,
-                                text: 'Number of Devices In UTA',
-                                fontSize: 25
-                            },
-                            legend: {
-                                display: true,
-                                position: 'right'
-                            },
 
                             scales: {
                                 yAxes: [
@@ -134,6 +94,7 @@ function Chart(props) {
                         }}
                     />
                 </Grid>
+
 
                 <Grid item xs={12} md={8} lg={7}>
                     <Pie
@@ -152,27 +113,7 @@ function Chart(props) {
                             label: {
                                 display: false
                             },
-                            scales: {
-                                yAxes: [
-                                    {
-                                        ticks: {
-                                            autoSkip: true,
-                                            maxTicksLimit: 10,
-                                            beginAtZero: true
-                                        },
-                                        gridLines: {
-                                            display: false
-                                        }
-                                    }
-                                ],
-                                xAxes: [
-                                    {
-                                        gridLines: {
-                                            display: false
-                                        }
-                                    }
-                                ]
-                            }
+
                         }}
                     />
                 </Grid>
