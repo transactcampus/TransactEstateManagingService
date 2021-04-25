@@ -30,14 +30,14 @@ nav a {
     background-color: #D50032; 
     color: white;
 }
-/* .custom-modal {
+.custom-modal {
     background-color:rgba(0, 0, 0, 0.1);
     
-    position:  fixed;
+    /* position:  fixed; */
    width: 600px;
    top: 40px;
-   left: calc(50% - 300px);
+   /* left: calc(50% - 300px); */
    bottom: 40px;
-   z-index: 100;
+   /* z-index: 100; */
     
-} */
+}
