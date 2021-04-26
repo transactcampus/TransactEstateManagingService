@@ -41,3 +41,7 @@ nav a {
    /* z-index: 100; */
     
 }
+
+.myborder {
+    outline: none; 
+}

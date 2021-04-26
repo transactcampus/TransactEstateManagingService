@@ -1,4 +1,4 @@
-import { Typography } from '@material-ui/core';
+
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchOnlineCount } from '../actions';
@@ -10,12 +10,13 @@ class TotalCount extends Component {
         this.props.fetchOnlineCount();
     }
     render() {
-        console.log(this.props);
+
         return (
-            <div>
-                <Typography variant="h5">Total Connected Devices</Typography>
-                <Typography variant="h3" align="center" color="secondary">{this.props.deviceOfflineCount + this.props.deviceOnlineCount}</Typography>
-            </div>
+            <div className='border border-success bg-success text-light' >
+
+                <h4 className='text-center'>Total Connected Devices</h4>
+                <h4 className='text-center'>{this.props.deviceOfflineCount + this.props.deviceOnlineCount}</h4>
+            </div >
         );
     }
 }

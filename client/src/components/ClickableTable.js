@@ -5,9 +5,8 @@ import Tabs from 'react-bootstrap/Tabs';
 import paginationFactory from "react-bootstrap-table2-paginator";
 import './ClickableTable.css';
 import ListGroup from 'react-bootstrap/ListGroup'
-
 import Summary from './Summary';
-
+import { Form } from 'react-bootstrap';
 
 function ClickableTable(props) {
 
@@ -16,41 +15,76 @@ function ClickableTable(props) {
 
   const [modalInfo, setModalInfo] = useState([]);
   const [showModal, setShowModal] = useState([false]);
+  const [isMobile, setIsMobile] = useState(false);
 
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-
+  const handleResize = () => {
+    if (window.innerWidth < 800 || window.innerWidth < 500) {
+      setIsMobile(true)
+    } else {
+      setIsMobile(false)
+    }
+  }
   useEffect(() => {
-    setDeviceinfo(props.deviceInfo)
+    setDeviceinfo(props.deviceInfo);
+    window.addEventListener("resize", handleResize);
   })
 
   const columns = [
     {
       dataField: 'device_id',
       text: 'Device ID',
-      headerStyle: { textAlign: 'center' }
+      headerStyle: { textAlign: 'center' },
+      sort: true,
+      align: 'center'
     },
     {
       dataField: 'university_id',
       text: 'University ID',
-      headerStyle: { textAlign: 'center' }
+      headerStyle: { textAlign: 'center' },
+      sort: true,
+      align: 'center'
     },
     {
       dataField: 'category',
       text: 'Category',
-      headerStyle: { textAlign: 'center' }
+      headerStyle: { textAlign: 'center' },
+      sort: true,
+      align: 'center'
     },
     {
       dataField: 'type',
       text: 'Type',
-      headerStyle: { textAlign: 'center' }
+      headerStyle: { textAlign: 'center' },
+      sort: true,
+      align: 'center'
     },
     {
       dataField: 'status',
       text: 'Status',
-      headerStyle: { textAlign: 'center' }
+      headerStyle: { textAlign: 'center' },
+      sort: true,
+      align: 'center'
+    }
+  ];
+
+  const smallscreencolumns = [
+    {
+      dataField: 'device_id',
+      text: 'Device ID',
+      headerStyle: { textAlign: 'center' },
+      sort: true,
+      align: 'center'
+    },
+    {
+      dataField: 'status',
+      text: 'Status',
+      headerStyle: { textAlign: 'center' },
+      sort: true,
+      align: 'center'
     }
   ];
 
@@ -108,26 +142,38 @@ function ClickableTable(props) {
         size="lg"
         aria-labelledby="contained-modal-title-vcenter"
         centered
-        show={show} onHide={handleClose} backdrop="static"
+        show={show}
+        onHide={handleClose}
+        backdrop="static"
         keyboard={false}>
         <Modal.Header closeButton>
           <Modal.Title
-            centered > {modalInfo.device_id}</Modal.Title>
+            className='text-center'
+
+          > <h4 >{modalInfo.device_id}</h4></Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Tabs fill variant="tabs" className="summaryTab" defaultActiveKey="summary" headerStyle={{ fontWeight: 'bold' }} activeHeaderStyle={{ color: 'white' }} id="uncontrolled-tab-example"  >
-            <Tab eventKey="summary" title="Summary">
-
+          <Tabs
+            fill
+            variant="tabs"
+            className="summaryTab"
+            defaultActiveKey="summary"
+            headerStyle={{ fontWeight: 'bold' }}
+            activeHeaderStyle={{ color: 'white' }}
+            id="uncontrolled-tab-example"
+            animation="true"
+          >
+            <Tab tabClassName="bg-info text-light" eventKey="summary" title="Summary">
               <Summary {...modalInfo} />
             </Tab>
-            <Tab eventKey="error" title="Error encountered">
+            <Tab tabClassName="bg-danger text-light" eventKey="error" title="Error encountered">
               <ListGroup>
                 <ListGroup.Item>Error1 </ListGroup.Item>
                 <ListGroup.Item> Error2 </ListGroup.Item>
               </ListGroup>
               {/* <Errors /> */}
             </Tab>
-            <Tab eventKey="history" title="History">
+            <Tab tabClassName="bg-secondary text-light" eventKey="history" title="History">
               <ListGroup>
                 <ListGroup.Item>History1 </ListGroup.Item>
                 <ListGroup.Item> History2 </ListGroup.Item>
@@ -138,7 +184,7 @@ function ClickableTable(props) {
 
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>Close</Button>
+          <Button variant="primary" onClick={handleClose}>Close</Button>
         </Modal.Footer>
 
       </Modal>
@@ -152,17 +198,34 @@ function ClickableTable(props) {
   return (
 
     <div className="App">
-      <div>
-        <input size="sm" className="mb-3" type="text" placeholder="Enter your search query..." value={q} onChange={(e) => setQ(e.target.value)} />
+      <div className='border border-light mb-5'>
+        <input style={{ border: "none" }} size="sm" className="mb-3" type="text" placeholder=" Enter your search query..." className="form-control" value={q} onChange={(e) => setQ(e.target.value)} />
       </div>
-      <BootstrapTable
-        striped bordered hover size="sm" ali
+      {isMobile ? <BootstrapTable
+        striped
+        bordered
+        hover
+        size="sm"
+        ali
         keyField="id"
         data={search(datas)}
-        columns={columns}
+        columns={smallscreencolumns}
         rowEvents={rowEvents}
         pagination={paginationFactory()}
-      />
+      /> :
+        <BootstrapTable
+          striped
+          bordered
+          hover
+          size="sm"
+          ali
+          keyField="id"
+          data={search(datas)}
+          columns={columns}
+          rowEvents={rowEvents}
+          pagination={paginationFactory()}
+        />}
+
       {show ? <ModalContent /> : null}
     </div>
   );

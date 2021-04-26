@@ -22,11 +22,11 @@ class OnlineCount extends Component {
     render() {
 
         return (
-            <div>
-                <MuiThemeProvider theme={theme}>
-                    <Typography variant="h5">Total Online Devices</Typography>
-                    <Typography variant="h3" align="center" color="primary">{this.props.deviceOnlineCount}</Typography>
-                </MuiThemeProvider>
+            <div className='border border-primary bg-primary text-light'>
+
+                <h4 className='text-center'>Total Online Devices</h4>
+                <h4 className='text-center'>{this.props.deviceOnlineCount}</h4>
+
             </div>
         );
     }

@@ -12,9 +12,9 @@ class OfflineCount extends Component {
     render() {
 
         return (
-            <div>
-                <Typography variant="h5">Total Offline Devices</Typography>
-                <Typography variant="h3" align="center" color="error">{this.props.deviceOfflineCount}</Typography>
+            <div className='border border-danger bg-danger text-light'>
+                <h4 className='text-center'>Total Offline Devices</h4>
+                <h4 className='text-center'> {this.props.deviceOfflineCount}</h4>
 
             </div>
         );

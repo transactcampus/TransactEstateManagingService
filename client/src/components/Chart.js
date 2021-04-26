@@ -20,110 +20,69 @@ function Chart(props) {
         setDeviceNum(props.deviceCategory)
     })
 
-    console.log(deviceNum)
+
 
     const chartData = {
-        labels: ['Campus Access Devices', 'Point of Sale', 'Door Access', 'Video Survelliance', 'Smart Terminals'],
+        labels: ['Number of Devices'],
         datasets: [
             {
-                label: 'Number of Devices',
+                label: 'Campus Access Devices',
                 data:
                     [
                         deviceNum.campusAccessDevices,
-                        deviceNum.pointofSale,
-                        deviceNum.doorAccess,
-                        deviceNum.VideoSurvillance,
-                        deviceNum.SmartTerminals
+
                     ],
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.6)',
-                    'rgba(54, 162, 235, 0.6)',
-                    'rgba(255, 206, 86, 0.6)',
-                    'rgba(75, 192, 192, 0.6)',
-                    'rgba(153, 102, 255, 0.6)',
-                    'rgba(255, 159, 64, 0.6)',
-                    'rgba(255, 99, 132, 0.6)'
+
+
                 ]
-            }
+            },
+            { label: 'Point of Sale', backgroundColor: 'rgba(54, 162, 235, 0.6)', data: [deviceNum.pointofSale] },
+            { label: 'Door Access', backgroundColor: 'rgba(255, 206, 86, 0.6)', data: [deviceNum.doorAccess] },
+            { label: 'Video Survelliance', backgroundColor: 'rgba(75, 192, 192, 0.6)', data: [deviceNum.VideoSurvillance] },
+            { label: 'Smart Terminals', backgroundColor: 'rgba(153, 102, 255, 0.6)', data: [deviceNum.SmartTerminals] },
         ]
     }
 
 
     return (
-        <div className="chart" >
+        <div>
 
-            <Grid container spacing={12}>
+            <Bar
+                data={chartData}
 
-                <Grid item xs={12} md={8} lg={6}>
-                    <Bar
-                        data={chartData}
+                options={{
 
-                        options={{
-                            title: {
-                                display: true,
-                                text: 'Number of Devices In UTA',
-                                fontSize: 25
-                            },
-                            legend: {
-                                display: true,
-                                position: 'right'
-                            },
-                            responsive: true,
-
-                            scales: {
-                                yAxes: [
-                                    {
-                                        ticks: {
-                                            autoSkip: true,
-                                            maxTicksLimit: 10,
-                                            beginAtZero: true
-                                        },
-                                        gridLines: {
-                                            display: false
-                                        }
-                                    }
-                                ],
-                                xAxes: [
-                                    {
-                                        gridLines: {
-                                            display: false
-                                        }
-                                    }
-                                ]
+                    legend: {
+                        display: true,
+                        position: 'right',
+                    },
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        yAxes: [
+                            {
+                                ticks: {
+                                    // autoSkip: true,
+                                    // maxTicksLimit: 10,
+                                    beginAtZero: true
+                                },
+                                gridLines: {
+                                    display: false
+                                }
                             }
-                        }}
-                    />
-                </Grid>
-
-
-                <Grid item xs={12} md={8} lg={7}>
-                    <Pie
-                        data={chartData}
-
-                        options={{
-                            title: {
-                                display: true,
-                                text: 'Number of Devices In UTA',
-                                fontSize: 25
-                            },
-                            legend: {
-                                display: true,
-                                position: 'right'
-                            },
-                            label: {
-                                display: false
-                            },
-
-                        }}
-                    />
-                </Grid>
-
-
-            </Grid>
-
-
-
-
+                        ],
+                        xAxes: [
+                            {
+                                gridLines: {
+                                    display: false
+                                }
+                            }
+                        ]
+                    }
+                }}
+            />
 
         </div>
     )
