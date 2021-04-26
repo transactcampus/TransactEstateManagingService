@@ -153,7 +153,7 @@ function ClickableTable(props) {
           > {isMobile ? <h5>{modalInfo.device_id}</h5> : <h4 >{modalInfo.device_id}</h4>}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Tabs
+          {isMobile ? <Tabs
             fill
             variant="tabs"
             className="summaryTab"
@@ -166,21 +166,36 @@ function ClickableTable(props) {
             <Tab tabClassName="bg-info text-light" eventKey="summary" title="Summary">
               <Summary {...modalInfo} />
             </Tab>
-            <Tab tabClassName="bg-danger text-light" eventKey="error" title="Error encountered">
-              <ListGroup>
-                <ListGroup.Item>Error1 </ListGroup.Item>
-                <ListGroup.Item> Error2 </ListGroup.Item>
-              </ListGroup>
-              {/* <Errors /> */}
-            </Tab>
-            <Tab tabClassName="bg-secondary text-light" eventKey="history" title="History">
-              <ListGroup>
-                <ListGroup.Item>History1 </ListGroup.Item>
-                <ListGroup.Item> History2 </ListGroup.Item>
-              </ListGroup>
-              {/* <History /> */}
-            </Tab>
-          </Tabs>
+
+          </Tabs> : <Tabs
+            fill
+            variant="tabs"
+            className="summaryTab"
+            defaultActiveKey="summary"
+            headerStyle={{ fontWeight: 'bold' }}
+            activeHeaderStyle={{ color: 'white' }}
+            id="uncontrolled-tab-example"
+            animation="true"
+          >
+              <Tab tabClassName="bg-info text-light" eventKey="summary" title="Summary">
+                <Summary {...modalInfo} />
+              </Tab>
+              <Tab tabClassName="bg-danger text-light" eventKey="error" title="Error encountered">
+                <ListGroup>
+                  <ListGroup.Item>Error1 </ListGroup.Item>
+                  <ListGroup.Item> Error2 </ListGroup.Item>
+                </ListGroup>
+                {/* <Errors /> */}
+              </Tab>
+              <Tab tabClassName="bg-secondary text-light" eventKey="history" title="History">
+                <ListGroup>
+                  <ListGroup.Item>History1 </ListGroup.Item>
+                  <ListGroup.Item> History2 </ListGroup.Item>
+                </ListGroup>
+                {/* <History /> */}
+              </Tab>
+            </Tabs>}
+
 
         </Modal.Body>
         <Modal.Footer>
