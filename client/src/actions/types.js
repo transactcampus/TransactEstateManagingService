@@ -5,3 +5,5 @@ export const FETCH_CATEGORY = 'fetch_category';
 export const FETCH_ONLINECOUNT = 'fetch_onlinecount';
 export const FETCH_OFFLINECOUNT = 'fetch_offlinecount';
 export const FETCH_TOTALCOUNT = 'fetch_totalcount';
+export const FETCH_HISTORY = 'fetch_history';
+export const FETCH_HISTORY_DEVICE = 'fetch_history_device';

@@ -6,7 +6,9 @@ import paginationFactory from "react-bootstrap-table2-paginator";
 import './ClickableTable.css';
 import ListGroup from 'react-bootstrap/ListGroup'
 import Summary from './Summary';
-import { Form } from 'react-bootstrap';
+import Badge from 'react-bootstrap/Badge';
+import DeviceHistory from './DeviceHistory';
+import ErrorHistory from './ErrorHistory';
 
 function ClickableTable(props) {
 
@@ -171,18 +173,11 @@ function ClickableTable(props) {
                 <Summary {...modalInfo} />
               </Tab>
               <Tab tabClassName="bg-danger text-light" eventKey="error" title="Error encountered">
-                <ListGroup>
-                  <ListGroup.Item>Error1 </ListGroup.Item>
-                  <ListGroup.Item> Error2 </ListGroup.Item>
-                </ListGroup>
-                {/* <Errors /> */}
+                <ErrorHistory id={modalInfo.device_id} />
               </Tab>
               <Tab tabClassName="bg-secondary text-light" eventKey="history" title="History">
-                <ListGroup>
-                  <ListGroup.Item>History1 </ListGroup.Item>
-                  <ListGroup.Item> History2 </ListGroup.Item>
-                </ListGroup>
-                {/* <History /> */}
+
+                <DeviceHistory id={modalInfo.device_id} />
               </Tab>
             </Tabs>}
 

@@ -1,5 +1,15 @@
 import axios from 'axios'; //used to make ajax request
-import { FETCH_USER, FETCH_DEVICE, FETCH_CATEGORY, FETCH_ONLINECOUNT, FETCH_OFFLINECOUNT, FETCH_TOTALCOUNT, LOGOUT } from './types';
+import {
+    FETCH_USER,
+    FETCH_DEVICE,
+    FETCH_CATEGORY,
+    FETCH_ONLINECOUNT,
+    FETCH_OFFLINECOUNT,
+    FETCH_TOTALCOUNT,
+    FETCH_HISTORY,
+    FETCH_HISTORY_DEVICE,
+    LOGOUT
+} from './types';
 
 //fetchUser is a action creater
 export const fetchUser = () => async dispatch => {
@@ -39,6 +49,23 @@ export const fetchTotalCount = () => async dispatch => {
     const res = await axios.get('/api/deviceprofile/totalcount');
     console.log(res);
     dispatch({ type: FETCH_TOTALCOUNT, payload: res.data });
+}
+
+export const fetchHistory = () => async dispatch => {
+    const res = await axios.get('/api/history');
+    console.log(res);
+    dispatch({ type: FETCH_HISTORY, payload: res.data });
+}
+
+export const fetchHistoryDevice = (deviceid) => async dispatch => {
+    try {
+        const res = await axios.get(`/api/history/${deviceid}`);
+        console.log(res);
+        dispatch({ type: FETCH_HISTORY_DEVICE, payload: res.data });
+    } catch (error) {
+
+    }
+
 }
 
 export const logout = () => (dispatch) => {

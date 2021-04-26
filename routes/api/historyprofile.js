@@ -10,6 +10,7 @@ const paginatedInfo = require('../../middleware/paginatedInfo');
 //@access private
 router.get('/', paginatedData(HistoryStore), async (req, res) => {
     res.json(res.paginatedResult);
+
 });
 
 //@route GET api/history/device_id

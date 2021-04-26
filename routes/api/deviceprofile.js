@@ -80,7 +80,7 @@ router.get('/analyticdata', async (req, res) => {
 });
 
 //@route GET api/deviceprofile/totalcount
-//@desc Get the total number of offline devices
+//@desc Get the total number of devices
 //@access private
 router.get('/totalcount', async (req, res) => {
     try {
