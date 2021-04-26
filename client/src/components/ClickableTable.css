@@ -46,8 +46,8 @@ nav a {
     .custom-modal {
         background-color:rgba(0, 0, 0, 0.1);
         
-        /* position:  fixed; */
-       width: 90px;
+        position:  fixed;
+       width: 400px;
        top: 40px;
        /* left: calc(50% - 300px); */
        bottom: 40px;

@@ -22,7 +22,7 @@ function ClickableTable(props) {
   const handleShow = () => setShow(true);
 
   const handleResize = () => {
-    if (window.innerWidth < 800 || window.innerWidth < 500) {
+    if (window.innerWidth < 800) {
       setIsMobile(true)
     } else {
       setIsMobile(false)
@@ -154,7 +154,7 @@ function ClickableTable(props) {
         </Modal.Header>
         <Modal.Body>
           {isMobile ?
-            <div><Summary {...modalInfo} /></div>
+            <Summary {...modalInfo} />
 
 
             : <Tabs
