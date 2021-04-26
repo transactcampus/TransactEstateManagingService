@@ -79,6 +79,27 @@ router.get('/analyticdata', async (req, res) => {
     }
 });
 
+//@route GET api/deviceprofile/totalcount
+//@desc Get the total number of offline devices
+//@access private
+router.get('/totalcount', async (req, res) => {
+    try {
+        // await DeviceInfo.countDocuments({ status: 'online' }, function (err, c) {
+        //     res.json({ onlineDevices: "c" });
+        // });
+        const onlinecount = await DeviceInfo.countDocuments({ status: 'online' });
+        const offlinecount = await DeviceInfo.countDocuments({ status: 'offline' });
+        const statdata = {
+            onlinecount: onlinecount,
+            offlinecount: offlinecount
+        }
+        res.json(statdata);
+    } catch (err) {
+        console.log(err.message);
+        res.status(500).send('Server Error');
+    }
+});
+
 //@route GET api/deviceprofile/:status
 //@route GET api/deviceprofile/:status?page=1&limit=10
 //@desc Get devices by their recent status
