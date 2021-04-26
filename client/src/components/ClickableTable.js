@@ -150,7 +150,7 @@ function ClickableTable(props) {
           <Modal.Title
             className='text-center'
 
-          > <h4 >{modalInfo.device_id}</h4></Modal.Title>
+          > {isMobile ? <h5>{modalInfo.device_id}</h5> : <h4 >{modalInfo.device_id}</h4>}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Tabs

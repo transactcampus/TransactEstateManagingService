@@ -42,6 +42,20 @@ nav a {
     
 }
 
+@media only screen and (max-width: 500px) {
+    .custom-modal {
+        background-color:rgba(0, 0, 0, 0.1);
+        
+        /* position:  fixed; */
+       width: 90px;
+       top: 40px;
+       /* left: calc(50% - 300px); */
+       bottom: 40px;
+       /* z-index: 100; */
+        
+    }
+ }
+
 .myborder {
     outline: none; 
 }
