@@ -38,7 +38,7 @@ app.use(passport.session());
 passport.use(new AzureAdOAuth2Strategy({
     clientID: process.env.clientID,
     clientSecret: process.env.clientSecret,
-    callbackURL: 'https://transact-estate-manager.herokuapp.com/api/auth/callback',
+    callbackURL: 'http://localhost:3000/api/auth/callback',
 }, (accessToken, refresh_token, params, profile, done) => {
     var waadProfile = jwt.decode(params.id_token, '', true);
     //printing the user logged in profile

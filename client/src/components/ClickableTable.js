@@ -153,30 +153,20 @@ function ClickableTable(props) {
           > {isMobile ? <h5>{modalInfo.device_id}</h5> : <h4 >{modalInfo.device_id}</h4>}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          {isMobile ? <Tabs
-            fill
-            variant="tabs"
-            className="summaryTab"
-            defaultActiveKey="summary"
-            headerStyle={{ fontWeight: 'bold' }}
-            activeHeaderStyle={{ color: 'white' }}
-            id="uncontrolled-tab-example"
-            animation="true"
-          >
-            <Tab tabClassName="bg-info text-light" eventKey="summary" title="Summary">
-              <Summary {...modalInfo} />
-            </Tab>
+          {isMobile ?
+            <div><Summary {...modalInfo} /></div>
 
-          </Tabs> : <Tabs
-            fill
-            variant="tabs"
-            className="summaryTab"
-            defaultActiveKey="summary"
-            headerStyle={{ fontWeight: 'bold' }}
-            activeHeaderStyle={{ color: 'white' }}
-            id="uncontrolled-tab-example"
-            animation="true"
-          >
+
+            : <Tabs
+              fill
+              variant="tabs"
+              className="summaryTab"
+              defaultActiveKey="summary"
+              headerStyle={{ fontWeight: 'bold' }}
+              activeHeaderStyle={{ color: 'white' }}
+              id="uncontrolled-tab-example"
+              animation="true"
+            >
               <Tab tabClassName="bg-info text-light" eventKey="summary" title="Summary">
                 <Summary {...modalInfo} />
               </Tab>
