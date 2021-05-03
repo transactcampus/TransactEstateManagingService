@@ -48,7 +48,7 @@ export class Maps extends Component {
     };
 
     renderMarker(deviceInfo) {
-        var markerString = <p>+ "DeVice ID" +</p> + deviceInfo.device_id + "\n" + "Error Type: ";
+        var markerString = "Device ID: " + deviceInfo.device_id + "\n" + "Error Type: " + deviceInfo.errorText;
         switch (deviceInfo.status) {
             case "online":
                 return <Marker
