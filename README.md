@@ -8,6 +8,7 @@ Built with
 * <a href="https://azure.microsoft.com/en-us/">Azure</a> - Used Azure IoT hub to register devices, function app to store data received from device into database and Cosmos DB's API for mongoDB
 * <a href="https://reactjs.org/">React JS</a> - The web framework for frontend
 * <a href="https://redux.js.org/">Redux JS</a> - Library used for frontend to store data
+* <a href="https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch">Fetch JS</a> - Library used for fetching resources asynchronously from the defined routes
 * <a href="https://nodejs.org/en/">Node JS</a> - Used for backend development with express to create server and interact with mongo DB.
 * <a href="https://expressjs.com/">Express JS</a> - Used for backend server to interact with API and make http request
 * <a href="https://mongoosejs.com/">Mongoose</a> - Used for creating Schema and interacting with mongo database
@@ -41,3 +42,6 @@ Built with
 
 # Setting Up Cosmos DB API for Mongo DB
 * <a href="https://docs.microsoft.com/en-us/azure/cosmos-db/mongodb-introduction">Cosmos DB API for MongoDB</a> - Example of setting up Cosmos DB's API for Mongo DB
+
+# License
+This project is licensed under the MIT License - see the LICENSE.md file for details
